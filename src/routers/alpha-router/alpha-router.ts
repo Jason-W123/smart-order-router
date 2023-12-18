@@ -568,6 +568,7 @@ export class AlphaRouter
           break;
         case ChainId.ARBITRUM_ONE:
         case ChainId.ARBITRUM_GOERLI:
+        case ChainId.ARBITRUM_SEPOLIA:
           this.onChainQuoteProvider = new OnChainQuoteProvider(
             chainId,
             provider,
@@ -774,7 +775,8 @@ export class AlphaRouter
     }
     if (
       chainId === ChainId.ARBITRUM_ONE ||
-      chainId === ChainId.ARBITRUM_GOERLI
+      chainId === ChainId.ARBITRUM_GOERLI ||
+      chainId === ChainId.ARBITRUM_SEPOLIA
     ) {
       this.l2GasDataProvider =
         arbitrumGasDataProvider ??
@@ -1467,7 +1469,14 @@ export class AlphaRouter
         throw new Error('Simulator not initialized!');
       }
 
-      log.info(JSON.stringify({ swapConfig, methodParameters, providerConfig }, null, 2), `Starting simulation`);
+      log.info(
+        JSON.stringify(
+          { swapConfig, methodParameters, providerConfig },
+          null,
+          2
+        ),
+        `Starting simulation`
+      );
       const fromAddress = swapConfig.simulate.fromAddress;
       const beforeSimulate = Date.now();
       const swapRouteWithSimulation = await this.simulator.simulate(
@@ -1953,7 +1962,9 @@ export class AlphaRouter
     const beforeGasTimestamp = Date.now();
 
     // Get an estimate of the gas price to use when estimating gas cost of different routes.
-    const { gasPriceWei } = await this.gasPriceProvider.getGasPrice(blockNumber);
+    const { gasPriceWei } = await this.gasPriceProvider.getGasPrice(
+      blockNumber
+    );
 
     metric.putMetric(
       'GasPriceLoad',

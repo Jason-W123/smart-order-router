@@ -265,6 +265,22 @@ export const USDC_ARBITRUM_GOERLI = new Token(
   'USD//C'
 );
 
+export const DAI_ARBITRUM_SEPOLIA = new Token(
+  ChainId.ARBITRUM_GOERLI,
+  '0x0000000000000000000000000000000000000000', // TODO: add address
+  18,
+  'DAI',
+  'Dai Stablecoin'
+);
+
+export const USDC_ARBITRUM_SEPOLIA = new Token(
+  ChainId.ARBITRUM_GOERLI,
+  '0x0000000000000000000000000000000000000000', // TODO: add address
+  6,
+  'USDC',
+  'USD//C'
+);
+
 //polygon tokens
 export const WMATIC_POLYGON = new Token(
   ChainId.POLYGON,
